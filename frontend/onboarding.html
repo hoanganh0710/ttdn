@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substack - Onboarding</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#121212',
+                        cardBg: '#1e1e1e',
+                        substackOrange: '#ff6719',
+                        substackOrangeHover: '#e05b15',
+                        borderDark: '#2a2a2a'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Logo chung -->
+    <div class="text-substackOrange text-3xl mb-4 bg-borderDark p-3 rounded-full cursor-pointer" onclick="window.location.href='index.html'">
+        <i class="fa-solid fa-book-bookmark"></i>
+    </div>
+
+    <!-- BƯỚC 1: Chọn chủ đề quan tâm -->
+    <div id="step1" class="w-full max-w-xl text-center space-y-4">
+        <h2 class="text-2xl font-bold text-white">Select 3 topics</h2>
+        <p class="text-xs text-gray-400">We'll recommend Substacks that fit your interests.</p>
+        
+        <div class="bg-cardBg border border-borderDark rounded-xl p-6 flex flex-wrap gap-2 justify-center max-h-72 overflow-y-auto">
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Culture</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Technology</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Business</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">U.S. Politics</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Finance</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Sports</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Science</button>
+            <button onclick="toggleTopic(this)" class="px-3 py-1.5 rounded-full border border-borderDark text-xs text-gray-300 hover:border-substackOrange transition">Design</button>
+        </div>
+
+        <button id="step1Btn" onclick="goToStep(2)" disabled class="w-full max-w-md bg-gray-700 text-gray-400 font-semibold py-3 px-4 rounded-lg transition text-sm cursor-not-allowed">
+            Select 3 more to continue
+        </button>
+    </div>
+
+    <!-- BƯỚC 2: Điền Email & Checkbox điều khoản dịch vụ -->
+    <div id="step2" class="w-full max-w-md text-center space-y-4 hidden">
+        <h2 class="text-2xl font-bold text-white">Sign up to subscribe</h2>
+        <p class="text-xs text-gray-400">Already have an account? <span class="text-substackOrange cursor-pointer hover:underline" onclick="window.location.href='index.html'">Sign in</span></p>
+        
+        <div class="bg-cardBg border border-borderDark rounded-xl p-6 text-left space-y-4">
+            <input type="email" id="userEmail" placeholder="Your email" class="w-full bg-darkBg border border-borderDark rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-substackOrange">
+            <label class="flex items-start space-x-2 text-xs text-gray-400 cursor-pointer">
+                <input type="checkbox" id="termsCheckbox" onchange="toggleTermsCheckbox(this)" class="mt-0.5 rounded bg-darkBg border-borderDark cursor-pointer">
+                <span>By creating an account, I agree to Substack's Terms of Use, and acknowledge its Information Collection Notice and Privacy Policy.</span>
+            </label>
+        </div>
+        
+        <button id="step2Btn" onclick="goToStep(3)" disabled class="w-full max-w-md bg-gray-700 text-gray-400 font-semibold py-3 px-4 rounded-lg transition text-sm cursor-not-allowed">
+            Sign up
+        </button>
+    </div>
+
+    <!-- BƯỚC 3: Điền Profile (Name, Handle, Bio) -->
+    <div id="step3" class="w-full max-w-md text-center space-y-4 hidden">
+        <h2 class="text-2xl font-bold text-white">Tell us about yourself</h2>
+        <p class="text-xs text-gray-400">Add your name, a profile picture, and a bit more about who you are.</p>
+        
+        <div class="bg-cardBg border border-borderDark rounded-xl p-6 text-left space-y-4">
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Name *</label>
+                <input type="text" id="userName" value="" class="w-full bg-darkBg border border-borderDark rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-substackOrange">
+            </div>
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Handle</label>
+                <input type="text" id="userHandle" placeholder="Type your handle..." class="w-full bg-darkBg border border-borderDark rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-substackOrange">
+            </div>
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Bio</label>
+                <textarea id="userBio" placeholder="Say something about yourself..." rows="2" class="w-full bg-darkBg border border-borderDark rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-substackOrange"></textarea>
+            </div>
+        </div>
+        <button onclick="submitOnboardingData()" class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-3 px-4 rounded-lg transition text-sm shadow">
+            Continue
+        </button>
+    </div>
+
+    <!-- BƯỚC 4: Hoàn tất (Done) -->
+    <div id="step4" class="w-full max-w-md text-center space-y-4 hidden">
+        <h2 class="text-2xl font-bold text-white">You're all set!</h2>
+        <p class="text-xs text-gray-400 leading-relaxed">Posts from the people you subscribe to will now appear in your inbox.</p>
+        
+        <!-- Bấm Done hoàn tất và quay về index.html -->
+        <button onclick="finishRegistration()" class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-3 px-4 rounded-lg transition text-sm shadow">
+            Done
+        </button>
+    </div>
+
+    <!-- Script điều khiển luồng Onboarding -->
+    <script>
+        let selectedTopicsCount = 0;
+
+        function toggleTopic(btn) {
+            btn.classList.toggle('bg-substackOrange');
+            btn.classList.toggle('text-white');
+            btn.classList.toggle('border-substackOrange');
+            
+            if (btn.classList.contains('bg-substackOrange')) {
+                selectedTopicsCount++;
+            } else {
+                selectedTopicsCount--;
+            }
+
+            const btnStep1 = document.getElementById('step1Btn');
+            if (selectedTopicsCount >= 3) {
+                btnStep1.disabled = false;
+                btnStep1.className = "w-full max-w-md bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-3 px-4 rounded-lg transition text-sm shadow cursor-pointer";
+                btnStep1.textContent = "Continue";
+            } else {
+                btnStep1.disabled = true;
+                btnStep1.className = "w-full max-w-md bg-gray-700 text-gray-400 font-semibold py-3 px-4 rounded-lg transition text-sm cursor-not-allowed";
+                btnStep1.textContent = `Select ${3 - selectedTopicsCount} more to continue`;
+            }
+        }
+
+        function toggleTermsCheckbox(checkbox) {
+            const btnStep2 = document.getElementById('step2Btn');
+            if (checkbox.checked) {
+                btnStep2.disabled = false;
+                btnStep2.className = "w-full max-w-md bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-3 px-4 rounded-lg transition text-sm shadow cursor-pointer";
+            } else {
+                btnStep2.disabled = true;
+                btnStep2.className = "w-full max-w-md bg-gray-700 text-gray-400 font-semibold py-3 px-4 rounded-lg transition text-sm cursor-not-allowed";
+            }
+        }
+
+        function goToStep(stepNumber) {
+            document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step${stepNumber}`).classList.remove('hidden');
+        }
+
+        // Gửi dữ liệu đăng ký qua API Next.js Backend
+        async function submitOnboardingData() {
+            const email = document.getElementById('userEmail').value;
+            const name = document.getElementById('userName').value;
+            const handle = document.getElementById('userHandle').value;
+            const bio = document.getElementById('userBio').value;
+
+            try {
+                await fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name, handle, bio })
+                });
+            } catch (e) {
+                console.log("Gửi API backend tạm thời ngoại tuyến, chuyển bước tiếp theo.");
+            }
+            goToStep(4);
+        }
+
+        function finishRegistration() {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

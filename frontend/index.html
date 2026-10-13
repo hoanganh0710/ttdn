@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Substack Clone - Giao diện trang chủ</title>
-    <!-- Sử dụng Tailwind CSS CDN -->
+    <title>Substack Clone - Trang Chủ</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,32 +23,26 @@
             }
         }
     </script>
-    <!-- FontAwesome cho icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col relative pb-16 md:pb-0">
 
-    <!-- Top Bar / Header nhỏ trên cùng -->
-    <header class="h-14 border-b border-borderDark flex items-center justify-between px-4 sticky top-0 bg-darkBg z-50">
+    <!-- Top Bar -->
+    <header class="h-14 border-b border-borderDark flex items-center justify-between px-4 sticky top-0 bg-darkBg z-40">
         <div class="flex items-center space-x-3">
             <div class="text-substackOrange text-2xl font-bold">
                 <i class="fa-solid fa-book-bookmark"></i>
             </div>
-            <div class="bg-borderDark text-xs text-gray-400 px-3 py-1 rounded-md flex items-center space-x-2">
-    
-                <i class="fa-solid fa-caret-down"></i>
-            </div>
+            <!-- Thanh chuyển đổi ngôn ngữ từ Database -->
+            <button onclick="toggleLanguage()" class="bg-borderDark hover:bg-gray-700 text-xs text-substackOrange font-semibold px-3 py-1.5 rounded-md transition flex items-center space-x-1.5">
+                <i class="fa-solid fa-globe text-gray-400"></i>
+                <span>Ngôn ngữ: <span id="langLabel" class="text-white uppercase">EN</span></span>
+            </button>
         </div>
-        <div class="flex items-center space-x-3 text-gray-400">
-            <button class="hover:text-white"><i class="fa-regular fa-bell"></i></button>
-            <button class="hover:text-white"><i class="fa-solid fa-globe"></i></button>
-            <button class="hover:text-white"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-            <button class="hover:text-white"><i class="fa-solid fa-download"></i></button>
-            <div class="w-7 h-7 bg-gray-600 rounded-full flex items-center justify-center text-white text-xs">H</div>
-        </div>
+       
     </header>
 
-    <!-- Main Container chia làm 3 cột -->
+    <!-- Main Container -->
     <div class="flex flex-1 max-w-7xl mx-auto w-full">
         
         <!-- CỘT 1: Navigation bên trái -->
@@ -56,54 +50,74 @@
             <nav class="space-y-1">
                 <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-borderDark text-white font-medium">
                     <i class="fa-solid fa-house w-5"></i>
-                    <span>Home</span>
+                    <span data-i18n="nav.home">Home</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                <a href="#" onclick="checkAuthRedirect()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
                     <i class="fa-regular fa-newspaper w-5"></i>
-                    <span>Subscriptions</span>
+                    <span data-i18n="nav.subscriptions">Subscriptions</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                <a href="#" onclick="checkAuthRedirect()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
                     <i class="fa-regular fa-comment-dots w-5"></i>
-                    <span>Chat</span>
+                    <span data-i18n="nav.chat">Chat</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                <a href="#" onclick="checkAuthRedirect()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
                     <i class="fa-regular fa-bolt w-5"></i>
-                    <span>Activity</span>
+                    <span data-i18n="nav.activity">Activity</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                <a href="#" onclick="checkAuthRedirect()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
                     <i class="fa-solid fa-magnifying-glass w-5"></i>
-                    <span>Explore</span>
+                    <span data-i18n="nav.explore">Explore</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
-                    <i class="fa-regular fa-user w-5"></i>
-                    <span>Profile</span>
+                <a href="#" onclick="checkAuthRedirect()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <div id="profileIconContainer" class="w-5 h-5 rounded-full flex items-center justify-center text-xs bg-gray-600 text-white">
+                        <i class="fa-regular fa-user text-[10px]"></i>
+                    </div>
+                    <span data-i18n="nav.profile">Profile</span>
                 </a>
             </nav>
 
-            <div class="pb-4">
-                <button class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2.5 px-4 rounded-lg transition shadow-md">
-                    Create
+            <div class="space-y-2 pb-2">
+                <button onclick="checkAuthRedirect()" class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2.5 px-4 rounded-lg transition shadow-md flex items-center justify-between">
+                    <span data-i18n="nav.create">Create</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
                 </button>
+
+                <!-- Menu More phía dưới (Chỉ hiện khi đã đăng nhập) -->
+                <div id="userMoreSection" class="hidden space-y-2 pt-2 border-t border-borderDark">
+                    <div id="userDropdownMenu" class="bg-sidebarBg border border-borderDark rounded-xl p-2 shadow-xl space-y-1 text-sm hidden">
+                        <a href="#" class="block px-3 py-2 rounded-md hover:bg-borderDark text-gray-300">Settings</a>
+                        <a href="#" class="block px-3 py-2 rounded-md hover:bg-borderDark text-gray-300">Support</a>
+                        <a href="#" onclick="logout()" class="block px-3 py-2 rounded-md hover:bg-borderDark text-red-400 font-medium">Sign out</a>
+                    </div>
+                    <button onclick="toggleUserMenu()" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-gray-400 hover:bg-borderDark text-sm">
+                        <span class="flex items-center space-x-2"><i class="fa-solid fa-bars"></i><span>More</span></span>
+                        <i class="fa-solid fa-chevron-up text-xs"></i>
+                    </button>
+                </div>
             </div>
         </aside>
 
         <!-- CỘT 2: Nội dung chính ở giữa -->
-        <main class="flex-1 px-4 md:px-6 py-6 max-w-2xl mx-auto w-full">
+        <main class="flex-1 px-3 sm:px-6 py-4 sm:py-6 max-w-2xl mx-auto w-full">
             
-            <!-- Banner quảng cáo / Khuyến khích viết bài -->
-            <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 rounded-2xl p-6 text-center text-white mb-6 shadow-lg relative overflow-hidden">
-                <h2 class="text-2xl font-bold mb-2">Make money doing the work you believe in</h2>
-                <div class="flex items-center justify-center space-x-4 mt-4">
-                    <button class="bg-substackOrange hover:bg-substackOrangeHover text-white font-medium px-5 py-2 rounded-full transition shadow">
+            <!-- Banner (Chỉ hiện khi chưa đăng nhập) -->
+            <div id="guestBanner" class="bg-gradient-to-r from-emerald-800 to-emerald-600 rounded-2xl p-4 sm:p-6 text-center text-white mb-6 shadow-lg">
+                <h2 class="text-xl sm:text-2xl font-bold mb-2" data-i18n="banner.title">Make money doing the work you believe in</h2>
+                <div class="flex items-center justify-center gap-3 mt-4">
+                    <button onclick="openAuthModal()" class="bg-substackOrange hover:bg-substackOrangeHover text-white font-medium px-5 py-2 rounded-full transition shadow text-sm">
                         Start your Substack
-                    </button>
-                    <button class="bg-black/30 hover:bg-black/50 text-white font-medium px-4 py-2 rounded-full transition">
-                        Learn more
                     </button>
                 </div>
             </div>
 
-            <!-- Bộ lọc For you -->
+            <!-- Ô đăng bài nhanh (Chỉ hiện khi đã đăng nhập) -->
+            <div id="createPostBox" class="hidden bg-sidebarBg border border-borderDark rounded-xl p-4 mb-6 flex items-center space-x-3">
+                <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">H</div>
+                <div class="flex-1 bg-darkBg border border-borderDark rounded-full px-4 py-2.5 text-gray-400 text-sm cursor-pointer hover:border-gray-500">
+                    What's on your mind?
+                </div>
+            </div>
+
             <div class="flex items-center justify-between mb-4 border-b border-borderDark pb-2 text-sm">
                 <div class="flex items-center space-x-1 text-gray-400 cursor-pointer">
                     <span>For you</span>
@@ -111,10 +125,7 @@
                 </div>
             </div>
 
-            <!-- Danh sách bài viết (Feed Notes) -->
             <div class="space-y-6">
-                
-                <!-- Bài viết số 1 -->
                 <article class="border-b border-borderDark pb-6">
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex items-center space-x-2">
@@ -124,82 +135,198 @@
                                 <span class="text-xs text-gray-500 ml-1">3h</span>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <button class="bg-borderDark hover:bg-gray-700 text-substackOrange text-xs font-semibold px-3 py-1 rounded-full transition">Subscribe</button>
-                            <button class="text-gray-500 hover:text-white"><i class="fa-solid fa-ellipsis"></i></button>
-                        </div>
+                        <button onclick="openAuthModal()" class="bg-borderDark hover:bg-gray-700 text-substackOrange text-xs font-semibold px-3 py-1 rounded-full transition">Subscribe</button>
                     </div>
                     <p class="text-sm text-gray-300 leading-relaxed mb-3">
-                       abc <span class="text-gray-500 cursor-pointer">See more</span>
+                        abc <span class="text-gray-500 cursor-pointer">See more</span>
                     </p>
-                    <div class="flex items-center space-x-6 text-gray-400 text-xs">
-                        <button class="flex items-center space-x-1.5 hover:text-red-500"><i class="fa-regular fa-heart"></i><span>34</span></button>
-                        <button class="flex items-center space-x-1.5 hover:text-blue-400"><i class="fa-regular fa-comment"></i><span>2</span></button>
-                        <button class="flex items-center space-x-1.5 hover:text-green-400"><i class="fa-solid fa-retweet"></i><span>8</span></button>
-                        <button class="hover:text-white"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
-                    </div>
                 </article>
-
-                <!-- Bài viết số 2 -->
-                <article class="border-b border-borderDark pb-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center space-x-2">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOAwsK0mhtACyljtZDyzivi9f0Ys_94pfkoP_UaJ9UJg&s=10" class="w-9 h-9 rounded-full object-cover" alt="Avatar">
-                            <div>
-                                <span class="font-semibold text-sm text-white flex items-center">Hoàng Anh <i class="fa-solid fa-circle-check text-xs text-gray-400 ml-1"></i></span>
-                                <span class="text-xs text-gray-500">3h</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <button class="bg-borderDark hover:bg-gray-700 text-substackOrange text-xs font-semibold px-3 py-1 rounded-full transition">Subscribe</button>
-                            <button class="text-gray-500 hover:text-white"><i class="fa-solid fa-ellipsis"></i></button>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
-                        xyz
-                    </p>
-                    <div class="flex items-center space-x-6 text-gray-400 text-xs">
-                        <button class="flex items-center space-x-1.5 hover:text-red-500"><i class="fa-regular fa-heart"></i><span>12</span></button>
-                        <button class="flex items-center space-x-1.5 hover:text-blue-400"><i class="fa-regular fa-comment"></i><span>1</span></button>
-                        <button class="flex items-center space-x-1.5 hover:text-green-400"><i class="fa-solid fa-retweet"></i><span>1</span></button>
-                        <button class="hover:text-white"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
-                    </div>
-                </article>
-
             </div>
         </main>
 
-        <!-- CỘT 3: Sidebar bên phải (Search & Login Box) -->
+        <!-- CỘT 3: Sidebar bên phải -->
         <aside class="w-80 p-4 hidden lg:block sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
-            <!-- Ô tìm kiếm -->
             <div class="relative mb-6">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </span>
-                <input type="text" placeholder="Search Substack" class="w-full bg-sidebarBg border border-borderDark rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-500">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" placeholder="Search Substack" class="w-full bg-sidebarBg border border-borderDark rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none">
             </div>
 
-            <!-- Khung Login / Signup -->
-            <div class="bg-sidebarBg border border-borderDark rounded-xl p-6 text-center">
-                <div class="text-substackOrange text-3xl mb-3">
-                    <i class="fa-solid fa-book-bookmark"></i>
-                </div>
-                <h3 class="font-bold text-base text-white mb-1">Log in or sign up</h3>
-                <p class="text-xs text-gray-400 mb-6 leading-relaxed">
-                    Join the most interesting and insightful discussions.
-                </p>
+            <!-- Khung Login / Signup (Hiện khi chưa đăng nhập) -->
+            <div id="guestSidebarBox" class="bg-sidebarBg border border-borderDark rounded-xl p-6 text-center">
+                <div class="text-substackOrange text-3xl mb-3"><i class="fa-solid fa-book-bookmark"></i></div>
+                <h3 class="font-bold text-base text-white mb-1" data-i18n="auth.loginTitle">Log in or sign up</h3>
+                <p class="text-xs text-gray-400 mb-6 leading-relaxed" data-i18n="auth.desc">Join the most interesting and insightful discussions.</p>
                 <div class="space-y-3">
-                    <button class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2 px-4 rounded-lg transition text-sm">
+                    <button onclick="openAuthModal()" class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2 px-4 rounded-lg transition text-sm">
                         Start your Substack
                     </button>
-                    <button class="w-full bg-borderDark hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition text-sm">
+                    <button onclick="openAuthModal()" class="w-full bg-borderDark hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition text-sm">
                         Sign in
                     </button>
+                </div>
+            </div>
+
+            <!-- Khung Recommended for you (Hiện khi đã đăng nhập) -->
+            <div id="userSidebarBox" class="hidden bg-sidebarBg border border-borderDark rounded-xl p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-sm text-white">Recommended for you</h3>
+                    <a href="#" class="text-xs text-substackOrange hover:underline">See all</a>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2.5 truncate">
+                            <div class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center text-white font-bold text-xs">A</div>
+                            <div class="truncate"><p class="text-xs font-semibold text-white truncate">Amber</p></div>
+                        </div>
+                        <button class="bg-borderDark text-substackOrange text-xs font-semibold px-2.5 py-1 rounded-full">Subscribe</button>
+                    </div>
                 </div>
             </div>
         </aside>
 
     </div>
 
+    <!-- MODAL ĐĂNG NHẬP -->
+    <div id="authModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center px-4">
+        <div class="bg-[#181818] border border-borderDark rounded-2xl w-full max-w-md p-6 relative shadow-2xl text-center">
+            
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-substackOrange text-3xl mb-3 inline-block bg-borderDark p-3 rounded-full">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+
+            <h3 class="text-lg font-bold text-white mb-1">Sign in to Substack</h3>
+            <!-- Bấm vào Create account sẽ chuyển sang onboarding.html -->
+            <p class="text-xs text-gray-400 mb-6">First time here? <span class="text-substackOrange cursor-pointer hover:underline" onclick="window.location.href='onboarding.html'">Create account</span></p>
+
+            <div class="space-y-4 text-left">
+                <div>
+                    <input type="email" placeholder="Your email" class="w-full bg-darkBg border border-borderDark rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-substackOrange">
+                </div>
+                <button onclick="loginSuccess()" class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-3 px-4 rounded-lg transition text-sm shadow">
+                    Continue
+                </button>
+            </div>
+
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-borderDark"></div></div>
+                <div class="relative flex justify-center text-xs uppercase"><span class="bg-[#181818] px-2 text-gray-500">or</span></div>
+            </div>
+
+            <button onclick="loginSuccess()" class="w-full bg-borderDark hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition text-sm">
+                Sign in with password
+            </button>
+        </div>
+    </div>
+
+    <!-- Script xử lý trang chủ -->
+    <script>
+        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        let currentLangCode = localStorage.getItem('preferred_lang') || 'en';
+        let dbTranslations = {};
+
+        // Gọi API Next.js Backend để lấy từ điển đa ngôn ngữ từ Database
+        async function fetchTranslationsFromDB(langCode) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/translations?code=${langCode}`);
+                if (!response.ok) throw new Error("Lỗi API DB");
+                dbTranslations = await response.json();
+                renderTranslations();
+            } catch (error) {
+                // Fallback nếu chưa chạy Next.js server
+                dbTranslations = langCode === 'vi' ? {
+                    "nav.home": "Trang chủ", "nav.subscriptions": "Đăng ký", "nav.chat": "Trò chuyện",
+                    "nav.activity": "Hoạt động", "nav.explore": "Khám phá", "nav.profile": "Hồ sơ", "nav.create": "Tạo bài viết",
+                    "banner.title": "Kiếm tiền từ công việc bạn tin tưởng",
+                    "auth.loginTitle": "Đăng nhập hoặc đăng ký", "auth.desc": "Tham gia vào các cuộc thảo luận thú vị và sâu sắc nhất."
+                } : {
+                    "nav.home": "Home", "nav.subscriptions": "Subscriptions", "nav.chat": "Chat",
+                    "nav.activity": "Activity", "nav.explore": "Explore", "nav.profile": "Profile", "nav.create": "Create",
+                    "banner.title": "Make money doing the work you believe in",
+                    "auth.loginTitle": "Log in or sign up", "auth.desc": "Join the most interesting and insightful discussions."
+                };
+                renderTranslations();
+            }
+        }
+
+        function renderTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dbTranslations[key]) {
+                    el.textContent = dbTranslations[key];
+                }
+            });
+        }
+
+        async function toggleLanguage() {
+            currentLangCode = currentLangCode === 'en' ? 'vi' : 'en';
+            document.getElementById('langLabel').textContent = currentLangCode.toUpperCase();
+            localStorage.setItem('preferred_lang', currentLangCode);
+            await fetchTranslationsFromDB(currentLangCode);
+        }
+
+        function updateUIState() {
+            const userMoreSection = document.getElementById('userMoreSection');
+            const guestBanner = document.getElementById('guestBanner');
+            const createPostBox = document.getElementById('createPostBox');
+            const guestSidebarBox = document.getElementById('guestSidebarBox');
+            const userSidebarBox = document.getElementById('userSidebarBox');
+            const userAvatarHeader = document.getElementById('userAvatarHeader');
+            const profileIconContainer = document.getElementById('profileIconContainer');
+
+            if (isLoggedIn) {
+                userMoreSection.classList.remove('hidden');
+                guestBanner.classList.add('hidden');
+                createPostBox.classList.remove('hidden');
+                guestSidebarBox.classList.add('hidden');
+                userSidebarBox.classList.remove('hidden');
+                userAvatarHeader.className = "w-7 h-7 bg-emerald-600 rounded-full flex items-center justify-center text-white text-xs font-bold cursor-pointer";
+                profileIconContainer.className = "w-5 h-5 bg-emerald-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold";
+                profileIconContainer.innerHTML = "H";
+            } else {
+                userMoreSection.classList.add('hidden');
+                guestBanner.classList.remove('hidden');
+                createPostBox.classList.add('hidden');
+                guestSidebarBox.classList.remove('hidden');
+                userSidebarBox.classList.add('hidden');
+                userAvatarHeader.className = "w-7 h-7 bg-gray-600 rounded-full flex items-center justify-center text-white text-xs cursor-pointer";
+                profileIconContainer.className = "w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center text-xs text-white";
+                profileIconContainer.innerHTML = '<i class="fa-regular fa-user text-[10px]"></i>';
+            }
+        }
+
+        function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function loginSuccess() {
+            localStorage.setItem('isLoggedIn', 'true');
+            isLoggedIn = true;
+            updateUIState();
+            closeAuthModal();
+        }
+
+        function checkAuthRedirect() {
+            if (!isLoggedIn) { openAuthModal(); }
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            isLoggedIn = false;
+            updateUIState();
+        }
+
+        function toggleUserMenu() {
+            document.getElementById('userDropdownMenu').classList.toggle('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('langLabel').textContent = currentLangCode.toUpperCase();
+            await fetchTranslationsFromDB(currentLangCode);
+            updateUIState();
+        });
+    </script>
 </body>
 </html>
