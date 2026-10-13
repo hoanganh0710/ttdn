@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substack Clone - Giao diện trang chủ</title>
+    <!-- Sử dụng Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#121212',
+                        sidebarBg: '#181818',
+                        cardBg: '#1e1e1e',
+                        substackOrange: '#ff6719',
+                        substackOrangeHover: '#e05b15',
+                        borderDark: '#2a2a2a'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Bar / Header nhỏ trên cùng -->
+    <header class="h-14 border-b border-borderDark flex items-center justify-between px-4 sticky top-0 bg-darkBg z-50">
+        <div class="flex items-center space-x-3">
+            <div class="text-substackOrange text-2xl font-bold">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <div class="bg-borderDark text-xs text-gray-400 px-3 py-1 rounded-md flex items-center space-x-2">
+    
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3 text-gray-400">
+            <button class="hover:text-white"><i class="fa-regular fa-bell"></i></button>
+            <button class="hover:text-white"><i class="fa-solid fa-globe"></i></button>
+            <button class="hover:text-white"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <button class="hover:text-white"><i class="fa-solid fa-download"></i></button>
+            <div class="w-7 h-7 bg-gray-600 rounded-full flex items-center justify-center text-white text-xs">H</div>
+        </div>
+    </header>
+
+    <!-- Main Container chia làm 3 cột -->
+    <div class="flex flex-1 max-w-7xl mx-auto w-full">
+        
+        <!-- CỘT 1: Navigation bên trái -->
+        <aside class="w-64 p-4 hidden md:flex flex-col justify-between border-r border-borderDark sticky top-14 h-[calc(100vh-3.5rem)]">
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-borderDark text-white font-medium">
+                    <i class="fa-solid fa-house w-5"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-newspaper w-5"></i>
+                    <span>Subscriptions</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots w-5"></i>
+                    <span>Chat</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-bolt w-5"></i>
+                    <span>Activity</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-solid fa-magnifying-glass w-5"></i>
+                    <span>Explore</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-user w-5"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="pb-4">
+                <button class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2.5 px-4 rounded-lg transition shadow-md">
+                    Create
+                </button>
+            </div>
+        </aside>
+
+        <!-- CỘT 2: Nội dung chính ở giữa -->
+        <main class="flex-1 px-4 md:px-6 py-6 max-w-2xl mx-auto w-full">
+            
+            <!-- Banner quảng cáo / Khuyến khích viết bài -->
+            <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 rounded-2xl p-6 text-center text-white mb-6 shadow-lg relative overflow-hidden">
+                <h2 class="text-2xl font-bold mb-2">Make money doing the work you believe in</h2>
+                <div class="flex items-center justify-center space-x-4 mt-4">
+                    <button class="bg-substackOrange hover:bg-substackOrangeHover text-white font-medium px-5 py-2 rounded-full transition shadow">
+                        Start your Substack
+                    </button>
+                    <button class="bg-black/30 hover:bg-black/50 text-white font-medium px-4 py-2 rounded-full transition">
+                        Learn more
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bộ lọc For you -->
+            <div class="flex items-center justify-between mb-4 border-b border-borderDark pb-2 text-sm">
+                <div class="flex items-center space-x-1 text-gray-400 cursor-pointer">
+                    <span>For you</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Danh sách bài viết (Feed Notes) -->
+            <div class="space-y-6">
+                
+                <!-- Bài viết số 1 -->
+                <article class="border-b border-borderDark pb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOAwsK0mhtACyljtZDyzivi9f0Ys_94pfkoP_UaJ9UJg&s=10" class="w-9 h-9 rounded-full object-cover" alt="Avatar">
+                            <div>
+                                <span class="font-semibold text-sm text-white">Hoàng Anh</span>
+                                <span class="text-xs text-gray-500 ml-1">3h</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="bg-borderDark hover:bg-gray-700 text-substackOrange text-xs font-semibold px-3 py-1 rounded-full transition">Subscribe</button>
+                            <button class="text-gray-500 hover:text-white"><i class="fa-solid fa-ellipsis"></i></button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
+                       abc <span class="text-gray-500 cursor-pointer">See more</span>
+                    </p>
+                    <div class="flex items-center space-x-6 text-gray-400 text-xs">
+                        <button class="flex items-center space-x-1.5 hover:text-red-500"><i class="fa-regular fa-heart"></i><span>34</span></button>
+                        <button class="flex items-center space-x-1.5 hover:text-blue-400"><i class="fa-regular fa-comment"></i><span>2</span></button>
+                        <button class="flex items-center space-x-1.5 hover:text-green-400"><i class="fa-solid fa-retweet"></i><span>8</span></button>
+                        <button class="hover:text-white"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+                    </div>
+                </article>
+
+                <!-- Bài viết số 2 -->
+                <article class="border-b border-borderDark pb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOAwsK0mhtACyljtZDyzivi9f0Ys_94pfkoP_UaJ9UJg&s=10" class="w-9 h-9 rounded-full object-cover" alt="Avatar">
+                            <div>
+                                <span class="font-semibold text-sm text-white flex items-center">Hoàng Anh <i class="fa-solid fa-circle-check text-xs text-gray-400 ml-1"></i></span>
+                                <span class="text-xs text-gray-500">3h</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="bg-borderDark hover:bg-gray-700 text-substackOrange text-xs font-semibold px-3 py-1 rounded-full transition">Subscribe</button>
+                            <button class="text-gray-500 hover:text-white"><i class="fa-solid fa-ellipsis"></i></button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
+                        xyz
+                    </p>
+                    <div class="flex items-center space-x-6 text-gray-400 text-xs">
+                        <button class="flex items-center space-x-1.5 hover:text-red-500"><i class="fa-regular fa-heart"></i><span>12</span></button>
+                        <button class="flex items-center space-x-1.5 hover:text-blue-400"><i class="fa-regular fa-comment"></i><span>1</span></button>
+                        <button class="flex items-center space-x-1.5 hover:text-green-400"><i class="fa-solid fa-retweet"></i><span>1</span></button>
+                        <button class="hover:text-white"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+        <!-- CỘT 3: Sidebar bên phải (Search & Login Box) -->
+        <aside class="w-80 p-4 hidden lg:block sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+            <!-- Ô tìm kiếm -->
+            <div class="relative mb-6">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" placeholder="Search Substack" class="w-full bg-sidebarBg border border-borderDark rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gray-500">
+            </div>
+
+            <!-- Khung Login / Signup -->
+            <div class="bg-sidebarBg border border-borderDark rounded-xl p-6 text-center">
+                <div class="text-substackOrange text-3xl mb-3">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <h3 class="font-bold text-base text-white mb-1">Log in or sign up</h3>
+                <p class="text-xs text-gray-400 mb-6 leading-relaxed">
+                    Join the most interesting and insightful discussions.
+                </p>
+                <div class="space-y-3">
+                    <button class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2 px-4 rounded-lg transition text-sm">
+                        Start your Substack
+                    </button>
+                    <button class="w-full bg-borderDark hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition text-sm">
+                        Sign in
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+</body>
+</html>
