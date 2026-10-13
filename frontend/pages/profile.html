@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>User Profile | Substack</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#121212',
+                        sidebarBg: '#181818',
+                        cardBg: '#1e1e1e',
+                        substackOrange: '#ff6719',
+                        substackOrangeHover: '#e05b15',
+                        borderDark: '#2a2a2a'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col relative pb-16 md:pb-0">
+
+    <!-- Top Bar -->
+    <header class="h-14 border-b border-borderDark flex items-center justify-between px-4 sticky top-0 bg-darkBg z-40">
+        <div class="flex items-center space-x-3">
+            <div class="text-substackOrange text-2xl font-bold cursor-pointer" onclick="window.location.href='index.html'">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <span id="topProfileTitle" class="text-sm font-semibold text-white">Substack Profile</span>
+        </div>
+        <div class="flex items-center space-x-3 text-gray-400">
+            <button class="hover:text-white"><i class="fa-regular fa-bell"></i></button>
+            <div class="w-7 h-7 bg-emerald-600 rounded-full flex items-center justify-center text-white text-xs font-bold">H</div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex flex-1 max-w-7xl mx-auto w-full">
+        
+        <!-- CỘT 1: Navigation bên trái -->
+        <aside class="w-64 p-4 hidden md:flex flex-col justify-between border-r border-borderDark sticky top-14 h-[calc(100vh-3.5rem)]">
+            <nav class="space-y-1">
+                <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-solid fa-house w-5"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-newspaper w-5"></i>
+                    <span>Subscriptions</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-comment-dots w-5"></i>
+                    <span>Chat</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-regular fa-bolt w-5"></i>
+                    <span>Activity</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <i class="fa-solid fa-magnifying-glass w-5"></i>
+                    <span>Explore</span>
+                </a>
+                <a href="#" onclick="goToMyProfile()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                    <div class="w-5 h-5 bg-emerald-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">H</div>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="space-y-2 pb-2">
+                <button class="w-full bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold py-2.5 px-4 rounded-lg transition shadow-md">
+                    <span>Create</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CỘT 2: Nội dung Profile ở giữa -->
+        <main class="flex-1 px-4 sm:px-10 py-8 max-w-4xl mx-auto w-full">
+            
+            <!-- Phần Header Profile -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-borderDark pb-8 mb-6 gap-6">
+                <div class="space-y-2">
+                    <h1 id="profileNameHeading" class="text-2xl font-bold text-white">User Name</h1>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg" id="profileAvatarLetter">U</div>
+                        <div>
+                            <h2 id="profileName" class="font-bold text-white text-base">User Name</h2>
+                            <p id="profileHandleDisplay" class="text-xs text-gray-400">@handle</p>
+                        </div>
+                    </div>
+                    <p id="profileBio" class="text-sm text-gray-300 pt-1">Thông tin tiểu sử người dùng...</p>
+                    <p class="text-xs text-gray-500 pt-1">See subscribers</p>
+                </div>
+
+                <div class="w-28 h-28 rounded-full bg-gradient-to-tr from-orange-500 via-pink-500 to-indigo-600 p-1 flex-shrink-0">
+                    <div class="w-full h-full bg-cardBg rounded-full flex items-center justify-center overflow-hidden">
+                        <div class="w-full h-full bg-gradient-to-br from-orange-400 to-teal-500 opacity-80"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút hành động (Phân quyền hiển thị) -->
+            <div id="actionButtonsContainer" class="flex items-center space-x-3 mb-8">
+                <!-- Render động qua JavaScript -->
+            </div>
+
+            <!-- Tabs -->
+            <div class="border-b border-borderDark flex space-x-8 text-sm mb-6">
+                <button class="pb-3 text-white font-semibold border-b-2 border-white">Activity</button>
+                <button class="pb-3 text-gray-400 hover:text-white font-medium">Posts</button>
+                <button class="pb-3 text-gray-400 hover:text-white font-medium">Replies</button>
+                <button class="pb-3 text-gray-400 hover:text-white font-medium">Likes</button>
+                <button class="pb-3 text-gray-400 hover:text-white font-medium">Subscriptions</button>
+            </div>
+
+            <!-- Khu vực nội dung Tab Activity -->
+            <div id="profileContentArea">
+                <!-- Render động qua JavaScript -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Script xử lý logic trang profile theo handle -->
+    <script>
+        // 1. Đọc handle từ URL (ví dụ: profile.html?handle=jettfranzen)
+        const urlParams = new URLSearchParams(window.location.search);
+        const profileHandle = urlParams.get('handle') || 'hhoanganh0710';
+        
+        // 2. Lấy thông tin user đang đăng nhập từ localStorage
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const loggedInUserHandle = localStorage.getItem('userHandle') || 'hhoanganh0710';
+
+        // 3. Kiểm tra xem có phải chính chủ hay không
+        const isOwner = isLoggedIn && (profileHandle === loggedInUserHandle);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hiển thị thông tin tương ứng với handle trên URL
+            document.getElementById('profileHandleDisplay').textContent = `@${profileHandle}`;
+            document.getElementById('topProfileTitle').textContent = `${profileHandle} | Substack`;
+            
+            if (profileHandle === 'hhoanganh0710') {
+                document.getElementById('profileNameHeading').textContent = 'Hoàng Anh';
+                document.getElementById('profileName').textContent = 'Hoàng Anh';
+                document.getElementById('profileBio').textContent = 'nooooooo';
+            } else {
+                // Giả lập dữ liệu khi xem profile người khác (như Jett Franzen)
+                document.getElementById('profileNameHeading').textContent = capitalizeFirstLetter(profileHandle);
+                document.getElementById('profileName').textContent = capitalizeFirstLetter(profileHandle);
+                document.getElementById('profileBio').textContent = 'Just a curious wannabe academic, particularly interested in philosophy and matters that shape our society.';
+                document.getElementById('profileAvatarLetter').textContent = profileHandle.charAt(0).toUpperCase();
+            }
+
+            const actionContainer = document.getElementById('actionButtonsContainer');
+            const contentArea = document.getElementById('profileContentArea');
+
+            if (isOwner) {
+                // --- TRƯỜNG HỢP 1: LÀ CHÍNH CHỦ (Được quyền chỉnh sửa)[cite: 18] ---
+                actionContainer.innerHTML = `
+                    <button class="bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold px-6 py-2 rounded-full text-sm transition shadow flex items-center space-x-2">
+                        <span>Create</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <button class="bg-cardBg hover:bg-borderDark text-white font-semibold px-5 py-2 rounded-full text-sm transition border border-borderDark">
+                        Edit profile[cite: 18]
+                    </button>
+                    <button class="w-9 h-9 bg-cardBg hover:bg-borderDark text-gray-300 rounded-full flex items-center justify-center border border-borderDark">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                `;
+
+                contentArea.innerHTML = `
+                    <div class="bg-sidebarBg border border-borderDark rounded-xl p-4 mb-6 flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">H</div>
+                        <div class="flex-1 bg-darkBg border border-borderDark rounded-full px-4 py-2.5 text-gray-400 text-sm cursor-pointer hover:border-gray-500">
+                            What's on your mind?[cite: 18]
+                        </div>
+                    </div>
+                    <div class="text-center py-12 text-gray-500 text-sm">
+                        <i class="fa-regular fa-pen-to-square text-2xl mb-2 block"></i>
+                        You haven't published anything yet.[cite: 18]<br>
+                        Get started by creating a note.[cite: 18]
+                    </div>
+                `;
+            } else {
+                // --- TRƯỜNG HỢP 2: LÀ KHÁCH HOẶC XEM PROFILE NGƯỜI KHÁC (Chỉ xem, không có quyền edit)[cite: 19] ---
+                actionContainer.innerHTML = `
+                    <button class="bg-substackOrange hover:bg-substackOrangeHover text-white font-semibold px-8 py-2 rounded-full text-sm transition shadow">
+                        Subscribe[cite: 19]
+                    </button>
+                    <button class="bg-cardBg hover:bg-borderDark text-white font-semibold px-6 py-2 rounded-full text-sm transition border border-borderDark">
+                        Message[cite: 19]
+                    </button>
+                    <button class="w-9 h-9 bg-cardBg hover:bg-borderDark text-gray-300 rounded-full flex items-center justify-center border border-borderDark">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                `;
+
+                contentArea.innerHTML = `
+                    <div class="text-center py-12 text-gray-500 text-sm">
+                        Chưa có hoạt động nào được hiển thị công khai từ tài khoản này.
+                    </div>
+                `;
+            }
+        });
+
+        function goToMyProfile() {
+            const myHandle = localStorage.getItem('userHandle') || 'hhoanganh0710';
+            window.location.href = `profile.html?handle=${myHandle}`;
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    </script>
+</body>
+</html>

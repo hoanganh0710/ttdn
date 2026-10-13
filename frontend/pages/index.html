@@ -23,9 +23,11 @@
             }
         }
     </script>
+    <!-- Liên kết file CSS tùy chỉnh -->
+    <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col relative pb-16 md:pb-0">
+<body class="min-h-screen flex flex-col relative pb-16 md:pb-0">
 
     <!-- Top Bar -->
     <header class="h-14 border-b border-borderDark flex items-center justify-between px-4 sticky top-0 bg-darkBg z-40">
@@ -33,13 +35,16 @@
             <div class="text-substackOrange text-2xl font-bold">
                 <i class="fa-solid fa-book-bookmark"></i>
             </div>
-            <!-- Thanh chuyển đổi ngôn ngữ từ Database -->
+            <!-- Nút chuyển đổi ngôn ngữ kết nối Database / API -->
             <button onclick="toggleLanguage()" class="bg-borderDark hover:bg-gray-700 text-xs text-substackOrange font-semibold px-3 py-1.5 rounded-md transition flex items-center space-x-1.5">
                 <i class="fa-solid fa-globe text-gray-400"></i>
                 <span>Ngôn ngữ: <span id="langLabel" class="text-white uppercase">EN</span></span>
             </button>
         </div>
-       
+        <div class="flex items-center space-x-3 text-gray-400">
+            <button onclick="openAuthModal()" class="hover:text-white"><i class="fa-regular fa-bell"></i></button>
+            <div id="userAvatarHeader" class="w-7 h-7 bg-gray-600 rounded-full flex items-center justify-center text-white text-xs cursor-pointer" onclick="openAuthModal()">H</div>
+        </div>
     </header>
 
     <!-- Main Container -->
@@ -48,7 +53,7 @@
         <!-- CỘT 1: Navigation bên trái -->
         <aside class="w-64 p-4 hidden md:flex flex-col justify-between border-r border-borderDark sticky top-14 h-[calc(100vh-3.5rem)]">
             <nav class="space-y-1">
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-borderDark text-white font-medium">
+                <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-borderDark text-white font-medium">
                     <i class="fa-solid fa-house w-5"></i>
                     <span data-i18n="nav.home">Home</span>
                 </a>
@@ -68,7 +73,7 @@
                     <i class="fa-solid fa-magnifying-glass w-5"></i>
                     <span data-i18n="nav.explore">Explore</span>
                 </a>
-                <a href="#" onclick="checkAuthRedirect()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
+                <a href="#" onclick="goToMyProfile()" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-borderDark hover:text-white transition">
                     <div id="profileIconContainer" class="w-5 h-5 rounded-full flex items-center justify-center text-xs bg-gray-600 text-white">
                         <i class="fa-regular fa-user text-[10px]"></i>
                     </div>
@@ -82,7 +87,6 @@
                     <i class="fa-solid fa-chevron-down text-xs"></i>
                 </button>
 
-                <!-- Menu More phía dưới (Chỉ hiện khi đã đăng nhập) -->
                 <div id="userMoreSection" class="hidden space-y-2 pt-2 border-t border-borderDark">
                     <div id="userDropdownMenu" class="bg-sidebarBg border border-borderDark rounded-xl p-2 shadow-xl space-y-1 text-sm hidden">
                         <a href="#" class="block px-3 py-2 rounded-md hover:bg-borderDark text-gray-300">Settings</a>
@@ -99,8 +103,6 @@
 
         <!-- CỘT 2: Nội dung chính ở giữa -->
         <main class="flex-1 px-3 sm:px-6 py-4 sm:py-6 max-w-2xl mx-auto w-full">
-            
-            <!-- Banner (Chỉ hiện khi chưa đăng nhập) -->
             <div id="guestBanner" class="bg-gradient-to-r from-emerald-800 to-emerald-600 rounded-2xl p-4 sm:p-6 text-center text-white mb-6 shadow-lg">
                 <h2 class="text-xl sm:text-2xl font-bold mb-2" data-i18n="banner.title">Make money doing the work you believe in</h2>
                 <div class="flex items-center justify-center gap-3 mt-4">
@@ -110,7 +112,6 @@
                 </div>
             </div>
 
-            <!-- Ô đăng bài nhanh (Chỉ hiện khi đã đăng nhập) -->
             <div id="createPostBox" class="hidden bg-sidebarBg border border-borderDark rounded-xl p-4 mb-6 flex items-center space-x-3">
                 <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">H</div>
                 <div class="flex-1 bg-darkBg border border-borderDark rounded-full px-4 py-2.5 text-gray-400 text-sm cursor-pointer hover:border-gray-500">
@@ -131,14 +132,14 @@
                         <div class="flex items-center space-x-2">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOAwsK0mhtACyljtZDyzivi9f0Ys_94pfkoP_UaJ9UJg&s=10" class="w-9 h-9 rounded-full object-cover" alt="Avatar">
                             <div>
-                                <span class="font-semibold text-sm text-white">Hoàng Anh</span>
-                                <span class="text-xs text-gray-500 ml-1">3h</span>
+                                <span class="font-semibold text-sm text-white cursor-pointer" onclick="window.location.href='profile.html?handle=jettfranzen'">HA</span>
+                                <span class="text-xs text-gray-500 ml-1">9h</span>
                             </div>
                         </div>
                         <button onclick="openAuthModal()" class="bg-borderDark hover:bg-gray-700 text-substackOrange text-xs font-semibold px-3 py-1 rounded-full transition">Subscribe</button>
                     </div>
                     <p class="text-sm text-gray-300 leading-relaxed mb-3">
-                        abc <span class="text-gray-500 cursor-pointer">See more</span>
+                        ...
                     </p>
                 </article>
             </div>
@@ -151,7 +152,6 @@
                 <input type="text" placeholder="Search Substack" class="w-full bg-sidebarBg border border-borderDark rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none">
             </div>
 
-            <!-- Khung Login / Signup (Hiện khi chưa đăng nhập) -->
             <div id="guestSidebarBox" class="bg-sidebarBg border border-borderDark rounded-xl p-6 text-center">
                 <div class="text-substackOrange text-3xl mb-3"><i class="fa-solid fa-book-bookmark"></i></div>
                 <h3 class="font-bold text-base text-white mb-1" data-i18n="auth.loginTitle">Log in or sign up</h3>
@@ -166,7 +166,6 @@
                 </div>
             </div>
 
-            <!-- Khung Recommended for you (Hiện khi đã đăng nhập) -->
             <div id="userSidebarBox" class="hidden bg-sidebarBg border border-borderDark rounded-xl p-4">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="font-bold text-sm text-white">Recommended for you</h3>
@@ -174,7 +173,7 @@
                 </div>
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2.5 truncate">
+                        <div class="flex items-center space-x-2.5 truncate cursor-pointer" onclick="window.location.href='profile.html?handle=amber'">
                             <div class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center text-white font-bold text-xs">A</div>
                             <div class="truncate"><p class="text-xs font-semibold text-white truncate">Amber</p></div>
                         </div>
@@ -189,19 +188,14 @@
     <!-- MODAL ĐĂNG NHẬP -->
     <div id="authModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center px-4">
         <div class="bg-[#181818] border border-borderDark rounded-2xl w-full max-w-md p-6 relative shadow-2xl text-center">
-            
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-
             <div class="text-substackOrange text-3xl mb-3 inline-block bg-borderDark p-3 rounded-full">
                 <i class="fa-solid fa-book-bookmark"></i>
             </div>
-
             <h3 class="text-lg font-bold text-white mb-1">Sign in to Substack</h3>
-            <!-- Bấm vào Create account sẽ chuyển sang onboarding.html -->
             <p class="text-xs text-gray-400 mb-6">First time here? <span class="text-substackOrange cursor-pointer hover:underline" onclick="window.location.href='onboarding.html'">Create account</span></p>
-
             <div class="space-y-4 text-left">
                 <div>
                     <input type="email" placeholder="Your email" class="w-full bg-darkBg border border-borderDark rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-substackOrange">
@@ -210,19 +204,10 @@
                     Continue
                 </button>
             </div>
-
-            <div class="relative my-6">
-                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-borderDark"></div></div>
-                <div class="relative flex justify-center text-xs uppercase"><span class="bg-[#181818] px-2 text-gray-500">or</span></div>
-            </div>
-
-            <button onclick="loginSuccess()" class="w-full bg-borderDark hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition text-sm">
-                Sign in with password
-            </button>
         </div>
     </div>
 
-    <!-- Script xử lý trang chủ -->
+    <!-- Script xử lý đa ngôn ngữ từ Database & Trạng thái -->
     <script>
         let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         let currentLangCode = localStorage.getItem('preferred_lang') || 'en';
@@ -236,7 +221,7 @@
                 dbTranslations = await response.json();
                 renderTranslations();
             } catch (error) {
-                // Fallback nếu chưa chạy Next.js server
+                // Fallback dữ liệu nếu chưa chạy Next.js server ở cổng 3000
                 dbTranslations = langCode === 'vi' ? {
                     "nav.home": "Trang chủ", "nav.subscriptions": "Đăng ký", "nav.chat": "Trò chuyện",
                     "nav.activity": "Hoạt động", "nav.explore": "Khám phá", "nav.profile": "Hồ sơ", "nav.create": "Tạo bài viết",
@@ -252,6 +237,7 @@
             }
         }
 
+        // Quét và thay đổi chữ trên giao diện dựa trên thuộc tính data-i18n
         function renderTranslations() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -261,6 +247,7 @@
             });
         }
 
+        // Chuyển đổi ngôn ngữ
         async function toggleLanguage() {
             currentLangCode = currentLangCode === 'en' ? 'vi' : 'en';
             document.getElementById('langLabel').textContent = currentLangCode.toUpperCase();
@@ -306,6 +293,15 @@
             isLoggedIn = true;
             updateUIState();
             closeAuthModal();
+        }
+
+        function goToMyProfile() {
+            if (!isLoggedIn) {
+                openAuthModal();
+            } else {
+                const myHandle = localStorage.getItem('userHandle') || 'hhoanganh0710';
+                window.location.href = `profile.html?handle=${myHandle}`;
+            }
         }
 
         function checkAuthRedirect() {
